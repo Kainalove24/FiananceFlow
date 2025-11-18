@@ -1,4 +1,5 @@
-import { Pool } from "pg";
+import pkg from "pg";
+const { Pool } = pkg;
 
 export const db = new Pool({
   host: process.env.DB_HOST,
@@ -6,5 +7,5 @@ export const db = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  ssl: { rejectUnauthorized: false } // required for Supabase & Render
+  ssl: { rejectUnauthorized: false }
 });
