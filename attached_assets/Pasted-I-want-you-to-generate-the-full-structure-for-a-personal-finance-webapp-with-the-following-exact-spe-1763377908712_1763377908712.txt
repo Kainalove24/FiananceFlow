@@ -1,0 +1,264 @@
+I want you to generate the full structure for a personal finance webapp with the following exact specifications. Build it using:
+
+Backend: Node.js + Express
+
+Database: postggresql
+Frontend: React + Vite
+
+Styling: TailwindCSS
+
+Charts: Recharts or Chart.js
+
+State Management: Zustand
+
+Create the project with the following folder structure:
+
+/project
+ ├── /backend
+ │     ├── server.js
+ │     ├── prisma/schema.prisma
+ │     ├── /routes
+ │     ├── /controllers
+ │     ├── /models
+ │     ├── /db
+ │     └── /utils
+ ├── /frontend
+ │     ├── index.html
+ │     ├── /src
+ │     │     ├── /components
+ │     │     ├── /pages
+ │     │     ├── /hooks
+ │     │     ├── /store
+ │     │     └── /services
+ └── package.json
+
+DATABASE SCHEMA (implement inside schema.prisma)
+
+Use SQLite.
+
+model Account {
+  id           Int      @id @default(autoincrement())
+  name         String
+  type         String    // cash, bank, credit_card, ewallet
+  balance      Float
+  creditLimit  Float?    // nullable
+  transactions Transaction[]
+  installments Installment[]
+}
+
+model Transaction {
+  id            Int      @id @default(autoincrement())
+  date          DateTime
+  description   String
+  amount        Float
+  category      String
+  type          String    // fixed, variable, installment, goal, income
+  account       Account   @relation(fields: [accountId], references: [id])
+  accountId     Int
+  installment   Installment? @relation(fields: [installmentId], references: [id])
+  installmentId Int?
+}
+
+model Installment {
+  id           Int     @id @default(autoincrement())
+  name         String
+  startDate    DateTime
+  term         Int
+  monthlyAmount Float
+  monthsPaid   Int
+  status       String   // active, done
+  account      Account  @relation(fields: [accountId], references: [id])
+  accountId    Int
+  transactions Transaction[]
+}
+
+model Goal {
+  id            Int      @id @default(autoincrement())
+  name          String
+  targetAmount  Float
+  currentAmount Float
+  deadline      DateTime
+}
+
+BACKEND REQUIREMENTS
+
+Generate Express routes for the following:
+
+Transactions API
+POST /transactions
+GET /transactions
+GET /transactions/:id
+PUT /transactions/:id
+DELETE /transactions/:id
+
+Accounts API
+GET /accounts
+POST /accounts
+PUT /accounts/:id
+
+Installments API
+POST /installments
+GET /installments
+PUT /installments/:id
+
+Goals API
+POST /goals
+GET /goals
+PUT /goals/:id
+
+
+Each route must have:
+
+Controller file
+
+Route file
+
+Prisma query logic
+
+Error handling
+
+JSON responses
+
+FRONTEND REQUIREMENTS
+
+Use React + Vite and create the following pages:
+
+Pages:
+
+DashboardPage
+
+TransactionsPage
+
+BudgetPlannerPage
+
+InstallmentsPage
+
+AccountsPage
+
+GoalsPage
+
+DashboardPage
+
+Show:
+
+Income vs expenses summary
+
+Remaining budget
+
+Active installments
+
+Account balances
+
+Category pie chart
+
+Monthly spending graph
+
+TransactionsPage
+
+Table of all transactions
+
+Filters (category, account, date range)
+
+Form to add/edit/delete transactions
+
+BudgetPlannerPage
+
+Input salary
+
+Auto-calculate:
+
+Fixed expenses
+
+Installment dues
+
+Savings
+
+Remaining budget
+
+Save budget plan
+
+InstallmentsPage
+
+List of active installments
+
+Progress bars
+
+Add installment form
+
+Months remaining
+
+AccountsPage
+
+List of accounts with balances
+
+Update/edit balances
+
+GoalsPage
+
+Savings goals
+
+Progress bar
+
+Deposit to goal
+
+Forecast completion
+
+STATE MANAGEMENT (Zustand)
+
+Create global stores for:
+
+accounts
+
+transactions
+
+installments
+
+goals
+
+Each store must include:
+
+fetchAll()
+
+create()
+
+update()
+
+delete()
+
+loading + error states
+
+AUTOMATION REQUIREMENTS
+
+Implement helper functions:
+
+Auto-post monthly installment transactions
+
+Auto-update monthsPaid
+
+Detect completed installments
+
+Basic keyword-based auto-categorization
+
+ADDITIONAL REQUIREMENTS
+
+Fully typed JavaScript (JSDoc) or TypeScript if supported
+
+Use reusable components for forms, tables, and charts
+
+Clean UI with Tailwind (modern dashboard look)
+
+Connect frontend to backend with Axios
+
+Ensure CORS is enabled
+
+Provide instructions in README for:
+
+Running backend
+
+Running frontend
+
+Database migration
+
+Generate the full setup, boilerplate code, and file structure following this specification exactly.
+Do not simplify, modify, or skip any part.
+This is a personal offline webapp; no authentication needed.
