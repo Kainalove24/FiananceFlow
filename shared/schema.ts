@@ -134,6 +134,7 @@ export const insertBudgetSchema = createInsertSchema(budgets, {
   savingsRate: z.coerce.string(),
   month: z.number().min(1).max(12),
   year: z.number().min(2000),
+  accountId: z.number().optional().nullable(), // Add this line
 }).omit({
   id: true,
   createdAt: true,
